@@ -2,6 +2,9 @@
   "manifest_version": 3,
   "name": "Chrome Extension | Timeline app",
   "version": "1.0.0",
+  "icons": {
+    "128": "./img/timeline.png"
+  },
   "action": {
     "default_popup": "./html/popup.html"
   },
