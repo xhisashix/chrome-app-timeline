@@ -558,8 +558,8 @@ video {
 .min-w-\[600px\] {
   min-width: 600px;
 }
-.max-w-sm {
-  max-width: 24rem;
+.min-w-\[90px\] {
+  min-width: 90px;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
