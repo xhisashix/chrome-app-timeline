@@ -26,6 +26,11 @@ class taskClass implements taskInterface {
     this.elapsed_time = "";
   }
 
+  /**
+   * タスクを追加する
+   * @param {string} taskName
+   * @return {void}
+   */
   public addTask(taskName: string): void {
     let taskList: taskInterface[] = [];
 
