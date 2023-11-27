@@ -59,6 +59,19 @@ class taskClass implements taskInterface {
   }
 
   /**
+   * フロント用のタスクリストを取得する
+   * @return {Promise<taskInterface[]>}
+   */
+  public async getTaskListForFront(): Promise<taskInterface[]> {
+    return new Promise<taskInterface[]>((resolve) => {
+      this.storage.getStorage("taskList", (result: string) => {
+        const taskList = this.getTaskList(result);
+        resolve(taskList);
+      });
+    });
+  }
+
+  /**
    * 現在時刻を取得する
    * @return {void}
    */
