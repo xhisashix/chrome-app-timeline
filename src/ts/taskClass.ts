@@ -50,6 +50,28 @@ class taskClass implements taskInterface {
     });
   }
 
+  /**
+   * タスクを削除する
+   * @param {number} id
+   * @returns {void} taskList
+   */
+  public deleteTask(id: number): void {
+    this.storage.getStorage("taskList", (result: string) => {
+      const taskList = this.getTaskList(result);
+      const newTaskList = taskList.filter((task) => task.id !== id);
+      console.log(newTaskList);
+      this.storage.saveToStorage("taskList", JSON.stringify(newTaskList));
+    });
+  }
+
+  /**
+   * タスクを全件削除する
+   * @returns {void}
+   */
+  public deleteAllTask(): void {
+    this.storage.saveToStorage("taskList", JSON.stringify([]));
+  }
+
   private getTaskList(result: string): taskInterface[] {
     if (result) {
       return JSON.parse(result);
