@@ -8,7 +8,7 @@
   </head>
   <body>
     <main class="container mx-auto p-4 min-w-[600px] min-h-[300px]">
-      <div class="">
+      <div class="main-section">
         <h1 class="text-lg">タイムライン</h1>
         <div id="form_area" class="mt-4">
           <!-- tailwindcss form -->
@@ -47,29 +47,22 @@
               </tr>
             </thead>
             <tbody id="task_lists">
-              <tr>
-                <td class="border px-2 py-2 min-w-[90px] startTime">09:00~</td>
-                <td class="border px-2 py-2 min-w-[90px] taskName">朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼朝礼</td>
-                <td class="border px-2 py-2 min-w-[90px] elapsed_time">00:00:00</td>
-                <td class="border px-2 py-2 min-w-[90px]">
-                  <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    type="button"
-                  >
-                    編集
-                  </button>
-                </td>
-                <td class="border px-2 py-2 min-w-[90px]">
-                  <button
-                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-auto"
-                    type="button"
-                  >
-                    削除
-                  </button>
-                </td>
-              </tr>
+              <!-- <tr>
+                <td class="border px-4 py-2">1</td>
+                <td class="border px-4 py-2">2</td>
+                <td class="border px-4 py-2">3</td>
+                <td class="border px-4 py-2">4</td>
+                <td class="border px-4 py-2">5</td>
+              </tr> -->
             </tbody>
           </table>
+        </div>
+        <div
+          class="bg-blue-100 border-t border-b border-blue-300 text-blue-500 mt-4 px-4 py-3"
+          role="alert"
+        >
+          <p class="font-bold">備考</p>
+          <p class="text-sm">タスクの時間は、15分単位で形状されます。</p>
         </div>
       </div>
     </main>
