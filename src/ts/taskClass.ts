@@ -72,6 +72,16 @@ class taskClass implements taskInterface {
     this.storage.saveToStorage("taskList", JSON.stringify([]));
   }
 
+  /**
+   * confirm delete alert
+   */
+  public confirmDelete(): void {
+    const result = window.confirm("全てのタスクを削除しますか？");
+    if (result) {
+      this.deleteAllTask();
+    }
+  }
+
   private getTaskList(result: string): taskInterface[] {
     if (result) {
       return JSON.parse(result);

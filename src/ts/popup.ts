@@ -17,6 +17,24 @@ addTask.addEventListener("click", () => {
   }, 500);
 });
 
+const resetBtn = document.getElementById("reset") as HTMLButtonElement;
+resetBtn.addEventListener("click", () => {
+  TaskClass.confirmDelete();
+
+  // タスクを削除したらリストを再描画する
+  setTimeout(() => {
+    const taskList = document.getElementById("task_lists") as HTMLDivElement;
+    taskList.innerHTML = "";
+    renderTaskList();
+  }, 500);
+});
+
+
+/**
+ * タスクリストを描画する
+ * @returns {void}
+ * @private
+ */
 async function renderTaskList() {
   const taskList = document.getElementById("task_lists");
   const result = await TaskClass.getTaskListForFront();
