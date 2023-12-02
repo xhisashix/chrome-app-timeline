@@ -91,6 +91,22 @@ class taskClass implements taskInterface {
   }
 
   /**
+   * タスクを時間順にソートする
+   * @param {taskInterface[]} taskList
+   * @return {taskInterface[]}
+   * @private
+   */
+  private sortTaskList(taskList: taskInterface[]): taskInterface[] {
+    return taskList.sort((a, b) => {
+      if (a.start_time < b.start_time) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
+  /**
    * フロント用のタスクリストを取得する
    * @return {Promise<taskInterface[]>}
    */
@@ -98,7 +114,7 @@ class taskClass implements taskInterface {
     return new Promise<taskInterface[]>((resolve) => {
       this.storage.getStorage("taskList", (result: string) => {
         const taskList = this.getTaskList(result);
-        resolve(taskList);
+        resolve(this.sortTaskList(taskList));
       });
     });
   }
