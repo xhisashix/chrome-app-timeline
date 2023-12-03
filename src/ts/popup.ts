@@ -1,8 +1,6 @@
 import taskClass from "./taskClass";
-import storageClass from "./storageClass";
 
 const TaskClass = new taskClass();
-const storage = new storageClass();
 
 interface taskInterface {
   id: number;
