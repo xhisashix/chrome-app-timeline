@@ -20,13 +20,6 @@ function init() {
 function setUpEventHandlers() {
   const addTask = document.getElementById("add_task") as HTMLButtonElement;
   addTask.addEventListener("click", handleAddTaskClick);
-  // エンターキーでタスク追加
-  const taskName = document.getElementById("task_name") as HTMLInputElement;
-  taskName.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      handleAddTaskClick();
-    }
-  });
 
   const resetBtn = document.getElementById("reset") as HTMLButtonElement;
   resetBtn.addEventListener("click", handleResetClick);
@@ -163,19 +156,41 @@ function createButton(text: string, classes: string[]) {
 
 // タスクの編集
 function editTask(taskId: number) {
-  // input要素を作成し、タスク名を取得する
-  const taskName = document.getElementById("task_name") as HTMLInputElement;
-  const newTaskName = window.prompt("タスク名を入力してください", taskName.value);
-  if (newTaskName) {
-    // タスク編集処理
-    TaskClass.editTask(taskId, newTaskName);
+  // タスクの編集処理、開始時間とタスク名を変更する
+  // 編集用のモーダルを表示する
+  console.log(taskId);
+  const modal = document.getElementById("modal") as HTMLDivElement;
+  modal.classList.remove("hidden");
 
-    // 0.5秒後にタスクリストを再描画する
-    setTimeout(() => {
-      refreshTaskList();
-    }, 500);
-  }
+  const taskName = document.getElementById(
+    "edit_task_name"
+  ) as HTMLInputElement;
+  const startTime = document.getElementById(
+    "edit_start_time"
+  ) as HTMLInputElement;
+  const editBtn = document.getElementById("edit_task") as HTMLButtonElement;
+  const cancelBtn = document.getElementById("cancel") as HTMLButtonElement;
+  const cancelModal = document.getElementById("close_modal") as HTMLDivElement;
+
+  editBtn.addEventListener("click", () => {
+    TaskClass.editTask(taskId, taskName.value, startTime.value);
+    modal.classList.add("hidden");
+    // 入力値をクリアする
+    taskName.value = "";
+    startTime.value = ""
+    refreshTaskList();
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  cancelModal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
 }
+
+
 
 // タスクの削除
 function deleteTask(taskId: number) {

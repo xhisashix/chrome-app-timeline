@@ -56,14 +56,16 @@ class TaskClass implements TaskInterface {
    * タスクを編集する
    * @param {number} id
    * @param {string} taskName
+   * @param {string} time
    * @return {void}
    */
-  public editTask(id: number, taskName: string): void {
+  public editTask(id: number, taskName: string, time: string): void {
     this.storage.getStorage("taskList", (result: string) => {
       const taskList = this.getTaskList(result);
       const newTaskList = taskList.map((task) => {
         if (task.id === id) {
           task.name = taskName;
+          task.start_time = time;
         }
         return task;
       });
