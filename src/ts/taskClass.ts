@@ -1,7 +1,7 @@
 import storageClass from "./storageClass";
 import moment from "moment";
 
-interface taskInterface {
+interface TaskInterface {
   id: number;
   name: string;
   start_time: string;
@@ -9,7 +9,9 @@ interface taskInterface {
   elapsed_time: string;
 }
 
-class taskClass implements taskInterface {
+type TaskList = TaskInterface[];
+
+class TaskClass implements TaskInterface {
   public id: number;
   public name: string;
   public start_time: string;
@@ -17,6 +19,7 @@ class taskClass implements taskInterface {
   public elapsed_time: string;
 
   protected storage: storageClass;
+
   constructor() {
     this.storage = new storageClass();
     this.id = 0;
@@ -32,11 +35,11 @@ class taskClass implements taskInterface {
    * @return {void}
    */
   public addTask(taskName: string): void {
-    let taskList: taskInterface[] = [];
+    let taskList: TaskInterface[] = [];
 
     this.storage.getStorage("taskList", (result: string) => {
       taskList = this.getTaskList(result);
-      const newTask: taskInterface = {
+      const newTask: TaskInterface = {
         id: taskList.length,
         name: taskName,
         start_time: this.formatTime(this.roundTime(this.getNow())),
@@ -100,7 +103,7 @@ class taskClass implements taskInterface {
     }
   }
 
-  private getTaskList(result: string): taskInterface[] {
+  private getTaskList(result: string): TaskInterface[] {
     if (result) {
       return JSON.parse(result);
     } else {
@@ -110,11 +113,11 @@ class taskClass implements taskInterface {
 
   /**
    * タスクを時間順にソートする
-   * @param {taskInterface[]} taskList
-   * @return {taskInterface[]}
+   * @param {TaskInterface[]} taskList
+   * @return {TaskInterface[]}
    * @private
    */
-  private sortTaskList(taskList: taskInterface[]): taskInterface[] {
+  private sortTaskList(taskList: TaskInterface[]): TaskInterface[] {
     return taskList.sort((a, b) => {
       if (a.start_time < b.start_time) {
         return -1;
@@ -126,10 +129,10 @@ class taskClass implements taskInterface {
 
   /**
    * フロント用のタスクリストを取得する
-   * @return {Promise<taskInterface[]>}
+   * @return {Promise<TaskInterface[]>}
    */
-  public async getTaskListForFront(): Promise<taskInterface[]> {
-    return new Promise<taskInterface[]>((resolve) => {
+  public async getTaskListForFront(): Promise<TaskInterface[]> {
+    return new Promise<TaskInterface[]>((resolve) => {
       this.storage.getStorage("taskList", (result: string) => {
         const taskList = this.getTaskList(result);
         resolve(this.sortTaskList(taskList));
@@ -138,7 +141,7 @@ class taskClass implements taskInterface {
   }
 
   public calculateTimeDifferenceAtIndex(
-    tasks: taskInterface[],
+    tasks: TaskInterface[],
     index: number
   ): string {
     console.log("calculateTimeDifferenceAtIndex: index = " + index);
@@ -191,10 +194,10 @@ class taskClass implements taskInterface {
 
   /**
    * タスクをレポート用にフォーマットする
-   * @param {taskInterface[]} taskList
+   * @param {TaskInterface[]} taskList
    * @return {string}
    */
-  public formatTaskListForReport(taskList: taskInterface[]): string {
+  public formatTaskListForReport(taskList: TaskInterface[]): string {
     let result = "";
     taskList.forEach((task) => {
       result += `・${task.start_time}~: ${task.name}\n`;
@@ -203,4 +206,4 @@ class taskClass implements taskInterface {
   }
 }
 
-export default taskClass;
+export default TaskClass;

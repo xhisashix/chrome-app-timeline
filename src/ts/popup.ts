@@ -35,6 +35,16 @@ function setUpEventHandlers() {
 
   const copyBtn = document.getElementById("copy") as HTMLButtonElement;
   copyBtn.addEventListener("click", handleCopyClick);
+
+  // タブルクリックでタスク編集
+  const taskList = document.getElementById("task_lists");
+  taskList?.addEventListener("dblclick", (e) => {
+    const target = e.target as HTMLElement;
+    const taskId = target.dataset.taskId;
+    if (taskId) {
+      editTask(Number(taskId));
+    }
+  });
 }
 
 // タスク追加ボタンのイベントハンドラ
