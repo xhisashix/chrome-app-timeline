@@ -82,7 +82,6 @@ class TaskClass implements TaskInterface {
     this.storage.getStorage("taskList", (result: string) => {
       const taskList = this.getTaskList(result);
       const newTaskList = taskList.filter((task) => task.id !== id);
-      console.log(newTaskList);
       this.storage.saveToStorage("taskList", JSON.stringify(newTaskList));
     });
   }
@@ -146,7 +145,6 @@ class TaskClass implements TaskInterface {
     tasks: TaskInterface[],
     index: number
   ): string {
-    console.log("calculateTimeDifferenceAtIndex: index = " + index);
     if (index === tasks.length - 1) {
       return "00:00";
     }
@@ -160,7 +158,6 @@ class TaskClass implements TaskInterface {
       .startOf("day")
       .add(diffInSeconds, "seconds")
       .format("HH:mm");
-    console.log("calculateTimeDifferenceAtIndex: result = " + result);
     return result;
   }
 
@@ -180,9 +177,7 @@ class TaskClass implements TaskInterface {
    * @return {moment.Moment}
    */
   public roundTime(time: moment.Moment): moment.Moment {
-    const rounded = time.minutes(Math.floor(time.minutes() / 15) * 15);
-    console.log(rounded);
-    return rounded;
+    return time.minutes(Math.floor(time.minutes() / 15) * 15);
   }
 
   /**
