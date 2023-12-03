@@ -39,14 +39,16 @@ async function renderTaskList() {
   const taskList = document.getElementById("task_lists");
   const result = await TaskClass.getTaskListForFront();
 
-  result.forEach((task) => {
+  result.forEach((task, index) => {
     const taskTr = document.createElement("tr");
     taskTr.classList.add("task");
 
     // 各セルの作成
     const startTimeTd = createTableCell(task.start_time);
     const nameTd = createTableCell(task.name);
-    const elapsedTimeTd = createTableCell(task.elapsed_time);
+    const elapsedTimeTd = createTableCell(
+      TaskClass.calculateTimeDifferenceAtIndex(result, index)
+    );
 
     // 編集ボタンのセル
     const editButton = createButton("編集", [

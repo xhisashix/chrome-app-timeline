@@ -36,7 +36,6 @@ class taskClass implements taskInterface {
 
     this.storage.getStorage("taskList", (result: string) => {
       taskList = this.getTaskList(result);
-
       const newTask: taskInterface = {
         id: taskList.length,
         name: taskName,
@@ -119,6 +118,28 @@ class taskClass implements taskInterface {
     });
   }
 
+  public calculateTimeDifferenceAtIndex(
+    tasks: taskInterface[],
+    index: number
+  ): string {
+    console.log("calculateTimeDifferenceAtIndex: index = " + index);
+    if (index === tasks.length - 1) {
+      return "00:00";
+    }
+
+    const taskTime = moment(tasks[index].start_time, "HH:mm");
+    const nextTaskTime = moment(tasks[index + 1].start_time, "HH:mm");
+
+    // 指定されたタスクと次のタスクの時間差分を秒単位で計算し、HH:mmフォーマットに変換
+    const diffInSeconds = nextTaskTime.diff(taskTime, "seconds");
+    const result = moment()
+      .startOf("day")
+      .add(diffInSeconds, "seconds")
+      .format("HH:mm");
+    console.log("calculateTimeDifferenceAtIndex: result = " + result);
+    return result;
+  }
+
   /**
    * 現在時刻を取得する
    * @return {void}
@@ -136,6 +157,7 @@ class taskClass implements taskInterface {
    */
   public roundTime(time: moment.Moment): moment.Moment {
     const rounded = time.minutes(Math.floor(time.minutes() / 15) * 15);
+    console.log(rounded);
     return rounded;
   }
 
