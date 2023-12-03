@@ -32,6 +32,9 @@ function setUpEventHandlers() {
 
   const resetBtn = document.getElementById("reset") as HTMLButtonElement;
   resetBtn.addEventListener("click", handleResetClick);
+
+  const copyBtn = document.getElementById("copy") as HTMLButtonElement;
+  copyBtn.addEventListener("click", handleCopyClick);
 }
 
 // タスク追加ボタンのイベントハンドラ
@@ -175,6 +178,28 @@ function deleteTask(taskId: number) {
   setTimeout(() => {
     refreshTaskList();
   }, 500);
+}
+
+// コピー
+async function handleCopyClick() {
+  const tasks = await TaskClass.getTaskListForFront();
+  const copyText = TaskClass.formatTaskListForReport(tasks);
+
+  // クリップボードにコピーする
+  navigator.clipboard.writeText(copyText);
+
+  // メッセージを表示する
+  const message = document.getElementById("message");
+  if (message) {
+    message.textContent = "クリップボードにコピーしました";
+    message.classList.add("text-green-500");
+
+    // 2秒後にメッセージを消す
+    setTimeout(() => {
+      message.textContent = "";
+      message.classList.remove("text-green-500");
+    }, 2000);
+  }
 }
 
 init();

@@ -188,6 +188,19 @@ class taskClass implements taskInterface {
   public formatTime(time: moment.Moment): string {
     return time.format("HH:mm");
   }
+
+  /**
+   * タスクをレポート用にフォーマットする
+   * @param {taskInterface[]} taskList
+   * @return {string}
+   */
+  public formatTaskListForReport(taskList: taskInterface[]): string {
+    let result = "";
+    taskList.forEach((task) => {
+      result += `・${task.start_time}~: ${task.name}\n`;
+    });
+    return result;
+  }
 }
 
 export default taskClass;
