@@ -158,7 +158,6 @@ function createButton(text: string, classes: string[]) {
 function editTask(taskId: number) {
   // タスクの編集処理、開始時間とタスク名を変更する
   // 編集用のモーダルを表示する
-  console.log(taskId);
   const modal = document.getElementById("modal") as HTMLDivElement;
   modal.classList.remove("hidden");
 
