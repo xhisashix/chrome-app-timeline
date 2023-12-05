@@ -44,10 +44,7 @@ function handleAddTaskClick() {
   TaskClass.addTask(taskName.value);
   taskName.value = "";
 
-  // 0.5秒後にタスクリストを再描画する
-  setTimeout(() => {
-    refreshTaskList();
-  }, 500);
+  refreshTaskList();
 }
 
 // リセットボタンのイベントハンドラ
@@ -157,6 +154,8 @@ function createButton(text: string, classes: string[]) {
 // タスクの編集
 function editTask(taskId: number) {
   // タスクの編集処理、開始時間とタスク名を変更する
+  let currentTaskId = taskId;
+  console.log("currentTaskId", currentTaskId);
   // 編集用のモーダルを表示する
   const modal = document.getElementById("modal") as HTMLDivElement;
   modal.classList.remove("hidden");
@@ -171,13 +170,24 @@ function editTask(taskId: number) {
   const cancelBtn = document.getElementById("cancel") as HTMLButtonElement;
   const cancelModal = document.getElementById("close_modal") as HTMLDivElement;
 
-  editBtn.addEventListener("click", () => {
-    TaskClass.editTask(taskId, taskName.value, startTime.value);
+  // タスクの情報を取得する
+  TaskClass.getTaskById(currentTaskId).then((task) => {
+    if (!task) {
+      console.error("task is null");
+      return;
+    }
+    taskName.value = task.name;
+    startTime.value = task.start_time;
+  });
+
+  editBtn.addEventListener("click", async () => {
+    await TaskClass.editTask(currentTaskId, taskName.value, startTime.value);
     modal.classList.add("hidden");
+    refreshTaskList();
     // 入力値をクリアする
     taskName.value = "";
-    startTime.value = ""
-    refreshTaskList();
+    startTime.value = "";
+    currentTaskId = 0;
   });
 
   cancelBtn.addEventListener("click", () => {
@@ -188,8 +198,6 @@ function editTask(taskId: number) {
     modal.classList.add("hidden");
   });
 }
-
-
 
 // タスクの削除
 function deleteTask(taskId: number) {

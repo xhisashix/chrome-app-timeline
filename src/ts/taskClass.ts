@@ -53,6 +53,21 @@ class TaskClass implements TaskInterface {
   }
 
   /**
+   * idをもとにタスクの取得
+   * @param {number} id
+   * @return {Promise<TaskInterface>}
+   */
+  public async getTaskById(id: number): Promise<TaskInterface | undefined> {
+    return new Promise<TaskInterface | undefined>((resolve) => {
+      this.storage.getStorage("taskList", (result: string) => {
+        const taskList = this.getTaskList(result);
+        const task = taskList.find((task) => task.id === id);
+        resolve(task);
+      });
+    });
+  }
+
+  /**
    * タスクを編集する
    * @param {number} id
    * @param {string} taskName
