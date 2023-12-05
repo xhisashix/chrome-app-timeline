@@ -44,7 +44,10 @@ function handleAddTaskClick() {
   TaskClass.addTask(taskName.value);
   taskName.value = "";
 
+// 0.5秒後にタスクリストを再描画する
+  setTimeout(() => {
   refreshTaskList();
+}, 500);
 }
 
 // リセットボタンのイベントハンドラ
@@ -198,6 +201,8 @@ function editTask(taskId: number) {
     modal.classList.add("hidden");
   });
 }
+
+
 
 // タスクの削除
 function deleteTask(taskId: number) {
