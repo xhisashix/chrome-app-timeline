@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "test": "jest",
-    "build:tailwind": "postcss src/css/style.css -o src/css/dist.css"
+    "build:tailwind": "postcss src/css/style.css -o src/css/dist.css",
+    "build:all": "npm run build:tailwind && npm run build"
   },
   "author": "",
   "license": "ISC",
