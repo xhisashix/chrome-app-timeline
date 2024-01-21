@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>設定</title>
+    <link rel="stylesheet" href="../css/dist.css" />
+  </head>
+  <body>
+    <main class="container mx-auto p-4 min-w-[600px] min-h-[300px]">
+      <div class="main-section">
+        <h1 class="text-lg">タイムライン設定</h1>
+        <div id="form_area" class="mt-4">
+          <!-- tailwindcss form -->
+          <form class="w-full">
+            <div class="flex items-center border-b-2 border-blue-500 py-2">
+              <input
+                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                type="text"
+                placeholder="Tag name"
+                aria-label="Tag name"
+                id="task_name"
+              />
+              <button
+                class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
+                type="button"
+                id="add_task"
+              >
+                保存
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
