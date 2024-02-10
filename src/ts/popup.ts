@@ -103,35 +103,16 @@ function createTaskRow(
     TaskClass.calculateTimeDifferenceAtIndex(tasks, index)
   );
 
-  const editTd = createButtonCell("編集", () => editTask(task.id));
-  const deleteTd = createButtonCell("削除", () => deleteTask(task.id));
+  const editTd = TaskClass.createButtonCell("編集", "", () =>
+    editTask(task.id)
+  );
+  const deleteTd = TaskClass.createButtonCell("削除", "red", () =>
+    deleteTask(task.id)
+  );
 
   taskTr.append(startTimeTd, nameTd, elapsedTimeTd, editTd, deleteTd);
 
   return taskTr;
-}
-
-// ボタンを含むセルを作成する
-function createButtonCell(
-  buttonText: string,
-  clickHandler: () => void
-): HTMLTableCellElement {
-  const button = createButton(buttonText, [
-    "bg-blue-500",
-    "hover:bg-blue-700",
-    "text-white",
-    "font-bold",
-    "py-2",
-    "px-4",
-    "rounded",
-  ]);
-  button.addEventListener("click", clickHandler);
-
-  const td = document.createElement("td");
-  td.classList.add("border", "px-2", "py-2", "min-w-[50px]");
-  td.appendChild(button);
-
-  return td;
 }
 
 /**
@@ -145,21 +126,6 @@ function createTableCell(text: string) {
   td.classList.add("border", "px-2", "py-2", "min-w-[90px]");
   td.textContent = text;
   return td;
-}
-
-/**
- * ボタンを作成する
- * @param {string} text
- * @param {string[]} classes
- * @returns {HTMLButtonElement}
- * @private
- */
-function createButton(text: string, classes: string[]) {
-  const button = document.createElement("button");
-  button.textContent = text;
-  button.type = "button";
-  classes.forEach((c) => button.classList.add(c));
-  return button;
 }
 
 // グローバルスコープでの変数定義
