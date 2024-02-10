@@ -29,6 +29,15 @@ function setUpEventHandlers() {
   const addTask = document.getElementById("add_task") as HTMLButtonElement;
   addTask.addEventListener("click", handleAddTaskClick);
 
+  const submitForm = document.querySelector("form");
+  submitForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // if taskName is not empty, add task
+    const taskName = document.getElementById("task_name") as HTMLInputElement;
+    if (taskName.value !== "") {
+      handleAddTaskClick();
+    }
+  });
   const resetBtn = document.getElementById("reset") as HTMLButtonElement;
   resetBtn.addEventListener("click", handleResetClick);
 
