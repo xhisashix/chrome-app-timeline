@@ -10,13 +10,13 @@ describe("test chrome_app_timeline", function () {
     });
   });
 
-  it('test chrome-app-timeline.storageClass.saveToStorage', function(done) {
+  it("test chrome-app-timeline.storageClass.saveToStorage", function (done) {
     let key = "test_key";
     let value = "test_value";
     storage.saveToStorage(key, value);
-    chrome.storage.local.get(key, function(items) {
-        expect(items[key]).toBe('value');
-        done();
+    chrome.storage.local.get(key, function (items) {
+      expect(items[key]).toBe("value");
+      done();
     });
-})
+  });
 });

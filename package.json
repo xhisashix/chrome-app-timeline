@@ -7,7 +7,8 @@
     "build": "webpack --mode=production",
     "test": "jest",
     "build:tailwind": "postcss src/css/style.css -o src/css/dist.css",
-    "build:all": "npm run build:tailwind && npm run build"
+    "build:all": "npm run build:tailwind && npm run build",
+    "format": "prettier --write src/"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "@types/mocha": "^10.0.3",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "prettier": "3.2.5",
     "style-loader": "^3.3.3",
     "ts-node": "^10.9.1",
     "webpack-cli": "^5.1.4"

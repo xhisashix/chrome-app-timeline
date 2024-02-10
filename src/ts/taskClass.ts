@@ -9,7 +9,6 @@ interface TaskInterface {
   elapsed_time: string;
 }
 
-
 class TaskClass implements TaskInterface {
   public id: number;
   public name: string;
@@ -155,10 +154,7 @@ class TaskClass implements TaskInterface {
     });
   }
 
-  public calculateTimeDifferenceAtIndex(
-    tasks: TaskInterface[],
-    index: number
-  ): string {
+  public calculateTimeDifferenceAtIndex(tasks: TaskInterface[], index: number): string {
     if (index === tasks.length - 1) {
       return "00:00";
     }
@@ -168,10 +164,7 @@ class TaskClass implements TaskInterface {
 
     // 指定されたタスクと次のタスクの時間差分を秒単位で計算し、HH:mmフォーマットに変換
     const diffInSeconds = nextTaskTime.diff(taskTime, "seconds");
-    const result = moment()
-      .startOf("day")
-      .add(diffInSeconds, "seconds")
-      .format("HH:mm");
+    const result = moment().startOf("day").add(diffInSeconds, "seconds").format("HH:mm");
     return result;
   }
 
@@ -235,7 +228,7 @@ class TaskClass implements TaskInterface {
   public createButtonCell(
     buttonText: string,
     color: string,
-    clickHandler: () => void
+    clickHandler: () => void,
   ): HTMLTableCellElement {
     const button = this.createButton(buttonText, [
       "bg-blue-500",

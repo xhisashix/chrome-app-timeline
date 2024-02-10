@@ -6,9 +6,7 @@ const editBtn = document.getElementById("edit_task") as HTMLButtonElement;
 const cancelBtn = document.getElementById("cancel") as HTMLButtonElement;
 const cancelModal = document.getElementById("close_modal") as HTMLDivElement;
 const taskName = document.getElementById("edit_task_name") as HTMLInputElement;
-const startTime = document.getElementById(
-  "edit_start_time"
-) as HTMLInputElement;
+const startTime = document.getElementById("edit_start_time") as HTMLInputElement;
 
 interface taskInterface {
   id: number;
@@ -101,23 +99,17 @@ async function renderTaskList() {
 function createTaskRow(
   task: taskInterface,
   index: number,
-  tasks: taskInterface[]
+  tasks: taskInterface[],
 ): HTMLTableRowElement {
   const taskTr = document.createElement("tr");
   taskTr.classList.add("task");
 
   const startTimeTd = createTableCell(task.start_time);
   const nameTd = createTableCell(task.name);
-  const elapsedTimeTd = createTableCell(
-    TaskClass.calculateTimeDifferenceAtIndex(tasks, index)
-  );
+  const elapsedTimeTd = createTableCell(TaskClass.calculateTimeDifferenceAtIndex(tasks, index));
 
-  const editTd = TaskClass.createButtonCell("編集", "", () =>
-    editTask(task.id)
-  );
-  const deleteTd = TaskClass.createButtonCell("削除", "red", () =>
-    deleteTask(task.id)
-  );
+  const editTd = TaskClass.createButtonCell("編集", "", () => editTask(task.id));
+  const deleteTd = TaskClass.createButtonCell("削除", "red", () => deleteTask(task.id));
 
   taskTr.append(startTimeTd, nameTd, elapsedTimeTd, editTd, deleteTd);
 
