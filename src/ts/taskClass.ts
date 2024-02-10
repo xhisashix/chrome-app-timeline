@@ -9,7 +9,6 @@ interface TaskInterface {
   elapsed_time: string;
 }
 
-type TaskList = TaskInterface[];
 
 class TaskClass implements TaskInterface {
   public id: number;
@@ -18,7 +17,7 @@ class TaskClass implements TaskInterface {
   public end_time: string;
   public elapsed_time: string;
 
-  protected storage: storageClass;
+  storage: storageClass;
 
   constructor() {
     this.storage = new storageClass();
