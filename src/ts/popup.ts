@@ -1,12 +1,22 @@
 import taskClass from "./taskClass";
-
+import diaryClass from "./diaryClass";
 const TaskClass = new taskClass();
+const Diary = new diaryClass();
 
+const createBtn = document.getElementById("createBtn") as HTMLButtonElement;
 const editBtn = document.getElementById("edit_task") as HTMLButtonElement;
 const cancelBtn = document.getElementById("cancel") as HTMLButtonElement;
 const cancelModal = document.getElementById("close_modal") as HTMLDivElement;
 const taskName = document.getElementById("edit_task_name") as HTMLInputElement;
 const startTime = document.getElementById("edit_start_time") as HTMLInputElement;
+
+// 日報作成
+createBtn.addEventListener("click", async () => {
+
+  const tasks = await TaskClass.getTaskListForFront();
+  const copyText = TaskClass.formatTaskListForReport(tasks);
+  Diary.createReportMail("", copyText);
+});
 
 interface taskInterface {
   id: number;
