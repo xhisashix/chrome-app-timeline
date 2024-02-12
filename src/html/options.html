@@ -1,37 +1,99 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>設定</title>
+    <title>Document</title>
     <link rel="stylesheet" href="../css/dist.css" />
   </head>
   <body>
-    <main class="container mx-auto p-4 min-w-[600px] min-h-[300px]">
-      <div class="main-section">
-        <h1 class="text-lg">タイムライン設定</h1>
-        <div id="form_area" class="mt-4">
-          <!-- tailwindcss form -->
-          <form class="w-full">
-            <div class="flex items-center border-b-2 border-blue-500 py-2">
-              <input
-                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                type="text"
-                placeholder="Tag name"
-                aria-label="Tag name"
-                id="task_name"
-              />
-              <button
-                class="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
-                type="button"
-                id="add_task"
-              >
-                保存
-              </button>
-            </div>
+    <div class="container mt-4 py-3">
+      <div>
+        <div class="mb-2">
+          <h1 class="text-lg font-bold">送信先設定</h1>
+        </div>
+        <div
+          id="message"
+          class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 hidden"
+          role="alert"
+        >
+          <p class="font-bold">設定を保存しました。</p>
+        </div>
+        <div>
+          <form class="from-15%">
+            <label for="to" class="block text-gray-700 text-base font-bold mb-2"
+              >to:</label
+            >
+            <input
+              type="text"
+              placeholder="to"
+              id="to"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline1 mb-3"
+            />
+            <label for="cc" class="block text-gray-700 text-base font-bold mb-2"
+              >cc:</label
+            >
+            <input
+              type="text"
+              placeholder="cc"
+              id="cc"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline1 mb-3"
+            />
+            <label
+              for="name"
+              class="block text-gray-700 text-base font-bold mb-2"
+              >名前</label
+            >
+            <input
+              type="text"
+              placeholder="名前"
+              id="name"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline1 mb-3"
+            />
+            <label
+              for="report_head"
+              class="block text-gray-700 text-base font-bold mb-2"
+              >テンプレート（ヘッダー）</label
+            >
+            <textarea
+              id="report_head"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline1 mb-3"
+              rows="10"
+            ></textarea>
+            <label
+              for="report_footer"
+              class="block text-gray-700 text-base font-bold mb-2"
+              >テンプレート（フッター）</label
+            >
+            <textarea
+              id="report_footer"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline1 mb-3"
+              rows="10"
+            ></textarea>
+            <button
+              type="button"
+              id="save"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              保存
+            </button>
           </form>
         </div>
       </div>
-    </main>
+      <div class="mt-4">
+        <h3 class="text-lg font-bold mb-3">Preview</h3>
+        <h3 class="text-base font-bold">件名</h3>
+        <div
+          id="preview_subject"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3"
+        ></div>
+        <h3 class="text-base font-bold">本文</h3>
+        <div
+          id="preview_body"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3"
+        ></div>
+      </div>
+    </div>
+    <script src="../js/options.js"></script>
   </body>
 </html>
