@@ -23,7 +23,6 @@ class diaryClass {
     const name = report_settings[3].name || "";
     const subject = this.createSubject(name);
 
-
     const to = report_settings[0].to;
     const cc = report_settings[1].cc;
     const report_head = report_settings[2].report_head || "";
@@ -54,8 +53,7 @@ class diaryClass {
    */
   createSubject(name: string) {
     const date = new Date();
-    const today =
-      date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+    const today = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
     const subject = `${today}  日報 - ${name}`;
 
     return subject;
@@ -66,8 +64,13 @@ class diaryClass {
    * @param {string} status_report
    * @return {string}
    */
-  template(report_head: string, task_report: string, status_report: string, report_footer: string = "") {
-    const report = `${report_head}\n\n【進捗状況】\n${status_report}\n\n【タスク状況】\n${task_report}\n\n${report_footer}`;
+  template(
+    report_head: string,
+    task_report: string,
+    status_report: string,
+    report_footer: string = "",
+  ) {
+    const report = `${report_head}\n\n【進捗状況】\n${this.perseTaskStatus(status_report)}\n\n【タスク状況】\n${task_report}\n\n${report_footer}`;
 
     return report;
   }
@@ -76,18 +79,23 @@ class diaryClass {
    * @param {string} report_head
    * @return {string}
    */
-  templateForPreview(
-    report_head: string,
-    report_footer: string,
-  ) {
-
+  templateForPreview(report_head: string, report_footer: string) {
     report_head = report_head.replace(/\n/g, "<br>");
     report_footer = report_footer.replace(/\n/g, "<br>");
     // フォーマットを崩さずに出力
     const report = `<p>${report_head}</p><br><p>【進捗状況】</p><p>{{進捗状況}}</p><br><p>【タスク状況】</p><p>{{タスク状況}}</p><br><p>${report_footer}</p>`;
 
-
     return report;
+  }
+
+  /**
+   * @param {string} task_status
+   * @return {string}
+   */
+  perseTaskStatus(task_status: string) {
+    // 半角＆を全角に変換
+    task_status = task_status.replace(/&/g, "＆");
+    return task_status;
   }
 }
 

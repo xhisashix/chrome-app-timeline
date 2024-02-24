@@ -51,7 +51,7 @@ save.onclick = () => {
 // プレビューへtemplateの値を出力
 window.onload = async () => {
   const template = await diary.templateForPreview(report_head.value, report_footer.value);
-  const subject = diary.createSubject(name.value);
+  const subject = await diary.createSubject(name.value);
   preview_subject.innerHTML = subject;
   preview_body.innerHTML = template;
 };
