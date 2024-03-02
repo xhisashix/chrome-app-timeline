@@ -29,7 +29,7 @@ class diaryClass {
     const report_footer = report_settings[4].report_footer || "";
     const body = this.template(report_head, task_report, status_report, report_footer);
 
-    const encodeBody = this.encodePlainText(body);
+    const encodeBody = await this.encodePlainText(body);
     const baseUrl = "https://mail.google.com/mail/?view=cm";
     const url = `${baseUrl}&to=${to}&cc=${cc}&su=${subject}&body=${encodeBody}`;
     chrome.tabs.create({ url: url }, (tab) => {
@@ -42,7 +42,7 @@ class diaryClass {
    * @param {string} body
    * @return {string}
    */
-  encodePlainText(body: string) {
+  async encodePlainText(body: string) {
     const encodedBody = encodeURI(body);
     return encodedBody;
   }
