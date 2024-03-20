@@ -95,6 +95,7 @@ class diaryClass {
   perseTaskStatus(task_status: string) {
     // 半角＆を全角に変換
     task_status = task_status.replace(/&/g, "＆");
+    task_status = task_status.replace("#", "＃");
     return task_status;
   }
 }
