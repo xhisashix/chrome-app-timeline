@@ -6,6 +6,8 @@ class diaryClass {
     this.storage = new storageClass();
   }
 
+  protected baseURL = "https://mail.google.com/mail/?view=cm";
+
   /**
    * @param {string} task_report
    * @param {string} status_report
@@ -30,8 +32,7 @@ class diaryClass {
     const body = this.template(report_head, task_report, status_report, report_footer);
 
     const encodeBody = await this.encodePlainText(body);
-    const baseUrl = "https://mail.google.com/mail/?view=cm";
-    const url = `${baseUrl}&to=${to}&cc=${cc}&su=${subject}&body=${encodeBody}`;
+    const url = `${this.baseURL}&to=${to}&cc=${cc}&su=${subject}&body=${encodeBody}`;
     chrome.tabs.create({ url: url }, (tab) => {
       console.log("tab", tab);
     });
