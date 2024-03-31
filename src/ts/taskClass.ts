@@ -7,6 +7,7 @@ interface TaskInterface {
   start_time: string;
   end_time: string;
   elapsed_time: string;
+  tag?: string;
 }
 
 class TaskClass implements TaskInterface {
@@ -15,6 +16,7 @@ class TaskClass implements TaskInterface {
   public start_time: string;
   public end_time: string;
   public elapsed_time: string;
+  public tag: string;
 
   storage: storageClass;
 
@@ -25,6 +27,7 @@ class TaskClass implements TaskInterface {
     this.start_time = "";
     this.end_time = "";
     this.elapsed_time = "";
+    this.tag = "";
   }
 
   /**
@@ -32,7 +35,7 @@ class TaskClass implements TaskInterface {
    * @param {string} taskName
    * @return {void}
    */
-  public addTask(taskName: string): void {
+  public addTask(taskName: string, tag: string = ""): void {
     let taskList: TaskInterface[] = [];
 
     this.storage.getStorage("taskList", (result: string) => {
@@ -43,6 +46,7 @@ class TaskClass implements TaskInterface {
         start_time: this.formatTime(this.roundTime(this.getNow())),
         end_time: "",
         elapsed_time: "",
+        tag: tag,
       };
 
       taskList.push(newTask);
@@ -69,16 +73,18 @@ class TaskClass implements TaskInterface {
    * タスクを編集する
    * @param {number} id
    * @param {string} taskName
+   * @param {string} tag
    * @param {string} time
    * @return {void}
    */
-  public editTask(id: number, taskName: string, time: string): void {
+  public editTask(id: number, taskName: string, tag: string = "" , time: string): void {
     this.storage.getStorage("taskList", (result: string) => {
       const taskList = this.getTaskList(result);
       const newTaskList = taskList.map((task) => {
         if (task.id === id) {
           task.name = taskName;
           task.start_time = time;
+          task.tag = tag;
         }
         return task;
       });

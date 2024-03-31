@@ -8,6 +8,7 @@ const editBtn = document.getElementById("edit_task") as HTMLButtonElement;
 const cancelBtn = document.getElementById("cancel") as HTMLButtonElement;
 const cancelModal = document.getElementById("close_modal") as HTMLDivElement;
 const taskName = document.getElementById("edit_task_name") as HTMLInputElement;
+const tag = document.getElementById("edit_tag") as HTMLInputElement;
 const startTime = document.getElementById("edit_start_time") as HTMLInputElement;
 
 // 日報作成
@@ -24,6 +25,7 @@ interface taskInterface {
   start_time: string;
   end_time: string;
   elapsed_time: string;
+  tag?: string;
 }
 
 // タスクリストの描画
@@ -42,6 +44,7 @@ function setUpEventHandlers() {
     e.preventDefault();
     // if taskName is not empty, add task
     const taskName = document.getElementById("task_name") as HTMLInputElement;
+    const tag = document.getElementById("tag") as HTMLInputElement;
     if (taskName.value !== "") {
       handleAddTaskClick();
     }
@@ -66,8 +69,10 @@ function setUpEventHandlers() {
 // タスク追加ボタンのイベントハンドラ
 function handleAddTaskClick() {
   const taskName = document.getElementById("task_name") as HTMLInputElement;
-  TaskClass.addTask(taskName.value);
+  const tag = document.getElementById("tag") as HTMLInputElement;
+  TaskClass.addTask(taskName.value, tag.value);
   taskName.value = "";
+  tag.value = "";
 
   // 0.5秒後にタスクリストを再描画する
   setTimeout(() => {
@@ -117,11 +122,12 @@ function createTaskRow(
   const startTimeTd = createTableCell(task.start_time);
   const nameTd = createTableCell(task.name);
   const elapsedTimeTd = createTableCell(TaskClass.calculateTimeDifferenceAtIndex(tasks, index));
+  const tagTd = createTableCell(task.tag ?? "");
 
   const editTd = TaskClass.createButtonCell("編集", "", () => editTask(task.id));
   const deleteTd = TaskClass.createButtonCell("削除", "red", () => deleteTask(task.id));
 
-  taskTr.append(startTimeTd, nameTd, elapsedTimeTd, editTd, deleteTd);
+  taskTr.append(startTimeTd, nameTd, elapsedTimeTd, tagTd, editTd, deleteTd);
 
   return taskTr;
 }
@@ -148,7 +154,7 @@ async function editTaskHandler() {
     console.error("No task selected for editing");
     return;
   }
-  await TaskClass.editTask(currentTaskId, taskName.value, startTime.value);
+  await TaskClass.editTask(currentTaskId, taskName.value, tag.value ,startTime.value);
   hideModal();
   // 0.5秒後にタスクリストを再描画する
   setTimeout(() => {
@@ -177,6 +183,7 @@ function editTask(taskId: number) {
       return;
     }
     taskName.value = task.name;
+    tag.value = task.tag ?? "";
     startTime.value = task.start_time;
   });
 }

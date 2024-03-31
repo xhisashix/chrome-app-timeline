@@ -13,16 +13,28 @@
         <div id="form_area" class="mt-4">
           <!-- tailwindcss form -->
           <form class="w-full">
-            <div class="flex items-center border-b-2 border-teal-500 py-2">
-              <input
-                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                type="text"
-                placeholder="Task name"
-                aria-label="Task name"
-                id="task_name"
-              />
+            <div class="flex items-center py-2 w-full">
+              <div class="border-b-2 border-teal-500 w-full">
+                <input
+                  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  type="text"
+                  placeholder="Task name"
+                  aria-label="Task name"
+                  id="task_name"
+                />
+              </div>
+              <div class="border-b-2 border-teal-500 ml-2">
+                <input
+                  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 pl-3 leading-tight focus:outline-none"
+                  type="text"
+                  step="900"
+                  placeholder="Tag"
+                  aria-label="Tag"
+                  id="tag"
+                />
+              </div>
               <button
-                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded ml-2"
                 type="button"
                 id="add_task"
               >
@@ -39,6 +51,7 @@
                 <th class="px-4 py-2">時間</th>
                 <th class="px-4 py-2">タスク名</th>
                 <th class="px-4 py-2">経過時間</th>
+                <th class="px-4 py-2">タグ</th>
                 <th class="px-4 py-2">編集</th>
                 <th class="px-4 py-2">削除</th>
               </tr>
@@ -74,7 +87,9 @@
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-2 rounded"
             type="button"
             id="createBtn"
-          >日報作成</button>
+          >
+            日報作成
+          </button>
           <!-- コピー完了のメッセージ -->
           <span id="message"></span>
         </div>
@@ -136,6 +151,18 @@
                 id="edit_task_name"
                 name="task_name"
                 placeholder="タスク名"
+                class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
+              />
+            </div>
+            <div class="flex flex-col">
+              <label for="task_tag" class="leading-loose text-gray-900 dark:text-gray-100">
+                タグ
+              </label>
+              <input
+                type="text"
+                id="edit_tag"
+                name="tag"
+                placeholder="タグ"
                 class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
               />
             </div>
