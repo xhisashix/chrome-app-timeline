@@ -77,7 +77,7 @@ class TaskClass implements TaskInterface {
    * @param {string} time
    * @return {void}
    */
-  public editTask(id: number, taskName: string, tag: string = "" , time: string): void {
+  public editTask(id: number, taskName: string, tag: string = "", time: string): void {
     this.storage.getStorage("taskList", (result: string) => {
       const taskList = this.getTaskList(result);
       const newTaskList = taskList.map((task) => {
@@ -210,7 +210,11 @@ class TaskClass implements TaskInterface {
   public formatTaskListForReport(taskList: TaskInterface[]): string {
     let result = "";
     taskList.forEach((task) => {
-      result += `・${task.start_time}~: ${task.name}\n`;
+      if (task.tag === "" || task.tag === undefined) {
+        result += `・${task.start_time}~: ${task.name}\n`;
+      } else {
+        result += `・${task.start_time}~: [${task.tag}] ${task.name}\n`;
+      }
     });
     return result;
   }
