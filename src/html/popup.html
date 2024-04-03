@@ -24,14 +24,11 @@
                 />
               </div>
               <div class="border-b-2 border-teal-500 ml-2">
-                <input
-                  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 pl-3 leading-tight focus:outline-none"
-                  type="text"
-                  step="900"
-                  placeholder="Tag"
-                  aria-label="Tag"
-                  id="tag"
-                />
+                <select name="tag" id="tag">
+                  <option value="Nコム">Nコム</option>
+                  <option value="プロダクト">プロダクト</option>
+                  <option value="社内業務">社内業務</option>
+                </select>
               </div>
               <button
                 class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded ml-2"
@@ -155,16 +152,11 @@
               />
             </div>
             <div class="flex flex-col">
-              <label for="task_tag" class="leading-loose text-gray-900 dark:text-gray-100">
-                タグ
-              </label>
-              <input
-                type="text"
-                id="edit_tag"
-                name="tag"
-                placeholder="タグ"
-                class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-1"
-              />
+              <select name="tag" id="edit_tag">
+                <option value="Nコム">Nコム</option>
+                <option value="プロダクト">プロダクト</option>
+                <option value="社内業務">社内業務</option>
+              </select>
             </div>
             <div class="flex flex-col">
               <label for="task_time" class="leading-loose text-gray-900 dark:text-gray-100">
