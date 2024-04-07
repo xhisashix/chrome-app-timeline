@@ -93,6 +93,25 @@ class TaskClass implements TaskInterface {
   }
 
   /**
+   * タスクの経過時間を保存する
+   * @param {number} id
+   * @param {string} elapsedTime
+   * @return {void}
+   */
+  public saveElapsedTime(id: number, elapsedTime: string): void {
+    this.storage.getStorage("taskList", (result: string) => {
+      const taskList = this.getTaskList(result);
+      const newTaskList = taskList.map((task) => {
+        if (task.id === id) {
+          task.elapsed_time = elapsedTime;
+        }
+        return task;
+      });
+      this.storage.saveToStorage("taskList", JSON.stringify(newTaskList));
+    });
+  }
+
+  /**
    * タスクを削除する
    * @param {number} id
    * @returns {void} taskList
@@ -160,6 +179,12 @@ class TaskClass implements TaskInterface {
     });
   }
 
+  /**
+   * 指定されたindexのタスクと次のタスクの時間差分を計算する
+   * @param {TaskInterface[]} tasks
+   * @param {number} index
+   * @return {string}
+   */
   public calculateTimeDifferenceAtIndex(tasks: TaskInterface[], index: number): string {
     if (index === tasks.length - 1) {
       return "00:00";
@@ -171,6 +196,12 @@ class TaskClass implements TaskInterface {
     // 指定されたタスクと次のタスクの時間差分を秒単位で計算し、HH:mmフォーマットに変換
     const diffInSeconds = nextTaskTime.diff(taskTime, "seconds");
     const result = moment().startOf("day").add(diffInSeconds, "seconds").format("HH:mm");
+    console.log(`${tasks[index].id} result: `, result);
+
+    setTimeout(() => {
+      this.saveElapsedTime(tasks[index].id, result);
+    }, 1000);
+
     return result;
   }
 
@@ -180,7 +211,6 @@ class TaskClass implements TaskInterface {
    */
   public getNow(): moment.Moment {
     const now = moment().format("YYYY-MM-DD HH:mm");
-    console.log(now);
     return moment(now);
   }
 
@@ -262,6 +292,33 @@ class TaskClass implements TaskInterface {
     td.appendChild(button);
 
     return td;
+  }
+
+  /**
+   * タグごとのタスクの経過時間を取得する
+   * @param {TaskInterface[]} tasks
+   * @return {Map<string, string>}
+   */
+  public calculateTimeDifferenceByTag(tasks: TaskInterface[]) {
+    const tagMap = new Map<string, string>();
+
+    tasks.forEach((task) => {
+      if (task.tag === "" || task.tag === undefined) {
+        return;
+      }
+
+      if (tagMap.has(task.tag)) {
+        const time = moment(tagMap.get(task.tag), "HH:mm");
+        const taskTime = moment(task.elapsed_time, "HH:mm");
+        const diff = time.add(taskTime.hours(), "hours").add(taskTime.minutes(), "minutes");
+        tagMap.set(task.tag, diff.format("HH:mm"));
+      } else {
+        tagMap.set(task.tag, task.elapsed_time);
+      }
+    });
+
+    console.log("tagMap: ", tagMap);
+    return tagMap;
   }
 }
 

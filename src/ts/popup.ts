@@ -10,10 +10,10 @@ const cancelModal = document.getElementById("close_modal") as HTMLDivElement;
 const taskName = document.getElementById("edit_task_name") as HTMLInputElement;
 const tag = document.getElementById("edit_tag") as HTMLInputElement;
 const startTime = document.getElementById("edit_start_time") as HTMLInputElement;
+const calculationTag = document.getElementById("calculationTag") as HTMLSelectElement;
 
 // 日報作成
 createBtn.addEventListener("click", async () => {
-
   const tasks = await TaskClass.getTaskListForFront();
   const copyText = TaskClass.formatTaskListForReport(tasks);
   Diary.createReportMail("", copyText);
@@ -64,6 +64,12 @@ function setUpEventHandlers() {
       editTask(Number(taskId));
     }
   });
+
+  // タグの経過時間を計算
+  calculationTag.addEventListener("click", async () => {
+    const tasks = await TaskClass.getTaskListForFront();
+    TaskClass.calculateTimeDifferenceByTag(tasks);
+  });
 }
 
 // タスク追加ボタンのイベントハンドラ
@@ -108,6 +114,9 @@ async function renderTaskList() {
       console.error("taskList is null");
     }
   });
+
+  const newTask = await TaskClass.getTaskListForFront();
+  TaskClass.calculateTimeDifferenceByTag(newTask);
 }
 
 // タスクの行を作成する
@@ -121,7 +130,8 @@ function createTaskRow(
 
   const startTimeTd = createTableCell(task.start_time);
   const nameTd = createTableCell(task.name);
-  const elapsedTimeTd = createTableCell(TaskClass.calculateTimeDifferenceAtIndex(tasks, index));
+  const elapsed = TaskClass.calculateTimeDifferenceAtIndex(tasks, index);
+  const elapsedTimeTd = createTableCell(elapsed);
   const tagTd = createTableCell(task.tag ?? "");
 
   const editTd = TaskClass.createButtonCell("編集", "", () => editTask(task.id));
@@ -154,7 +164,7 @@ async function editTaskHandler() {
     console.error("No task selected for editing");
     return;
   }
-  await TaskClass.editTask(currentTaskId, taskName.value, tag.value ,startTime.value);
+  await TaskClass.editTask(currentTaskId, taskName.value, tag.value, startTime.value);
   hideModal();
   // 0.5秒後にタスクリストを再描画する
   setTimeout(() => {
@@ -171,7 +181,6 @@ function hideModal() {
 // タスクの編集
 function editTask(taskId: number) {
   currentTaskId = taskId;
-  console.log("currentTaskId", currentTaskId);
   // 編集用のモーダルを表示する
   const modal = document.getElementById("modal") as HTMLDivElement;
   modal.classList.remove("hidden");

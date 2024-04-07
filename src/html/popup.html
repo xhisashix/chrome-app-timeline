@@ -84,6 +84,13 @@
           >
             日報作成
           </button>
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 ml-2 rounded"
+            type="button"
+            id="calculationTag"
+          >
+            タグ別時間計算
+          </button>
           <!-- コピー完了のメッセージ -->
           <span id="message"></span>
         </div>
@@ -150,6 +157,9 @@
             </div>
             <div class="flex flex-col">
               <select name="tag" id="edit_tag">
+                <option value="tag1">tag1</option>
+                <option value="tag2">tag2</option>
+                <option value="tag3">tag3</option>
               </select>
             </div>
             <div class="flex flex-col">
