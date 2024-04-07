@@ -320,6 +320,51 @@ class TaskClass implements TaskInterface {
     console.log("tagMap: ", tagMap);
     return tagMap;
   }
+
+  /**
+   * タグごとの経過時間を表示する
+   * @param {Map<string, string>} tagMap
+   * @return {void}
+   */
+  public displayTimeDifferenceByTag(tagMap: Map<string, string>): void {
+    const tagTime = document.getElementById("tagTime");
+    if (tagTime) {
+      tagTime.innerHTML = "";
+      tagMap.forEach((value, key) => {
+        const tagTr = document.createElement("tr");
+        tagTr.classList.add("tag");
+
+        const tagTd = this.createTagTableCell(key);
+        const timeTd = this.createTagTableCell(value);
+
+        tagTr.append(tagTd, timeTd);
+        tagTime.appendChild(tagTr);
+      });
+    }
+  }
+
+  /**
+   * タグのセルを作成する
+   * @param {string} text
+   * @returns {HTMLTableCellElement}
+   * @private
+   */
+  private createTagTableCell(text: string): HTMLTableCellElement {
+    const td = document.createElement("td");
+    td.classList.add("border", "px-2", "py-2", "min-w-[50px]");
+    td.textContent = text;
+    return td;
+  }
+
+  /**
+   * タグごとの経過時間を計算し、表示する
+   * @param {TaskInterface[]} tasks
+   * @return {void}
+   */
+  public async calculateTimeDifferenceByTagAndDisplay(tasks: TaskInterface[]): Promise<void> {
+    const tagMap = this.calculateTimeDifferenceByTag(tasks);
+    this.displayTimeDifferenceByTag(tagMap);
+  }
 }
 
 export default TaskClass;

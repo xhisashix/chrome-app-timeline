@@ -68,7 +68,13 @@ function setUpEventHandlers() {
   // タグの経過時間を計算
   calculationTag.addEventListener("click", async () => {
     const tasks = await TaskClass.getTaskListForFront();
-    TaskClass.calculateTimeDifferenceByTag(tasks);
+    const tagMap = TaskClass.calculateTimeDifferenceByTag(tasks);
+
+    const tagTimeTable = document.getElementById("tagTimeTable") as HTMLTableElement;
+    // テーブルを表示する
+    tagTimeTable.classList.remove("hidden");
+
+    TaskClass.displayTimeDifferenceByTag(tagMap);
   });
 }
 
