@@ -1,8 +1,10 @@
 import storageClass from "./storageClass";
 import diaryClass from "./diaryClass";
+import tagClass from "./tagClass";
 
 const storage = new storageClass();
 const diary = new diaryClass();
+const TagClass = new tagClass();
 const to = document.getElementById("to") as HTMLInputElement;
 const cc = document.getElementById("cc") as HTMLInputElement;
 const name = document.getElementById("name") as HTMLInputElement;
@@ -11,6 +13,8 @@ const report_footer = document.getElementById("report_footer") as HTMLInputEleme
 const save = document.getElementById("save") as HTMLButtonElement;
 const preview_subject = document.getElementById("preview_subject") as HTMLButtonElement;
 const preview_body = document.getElementById("preview_body") as HTMLButtonElement;
+const tag_name = document.getElementById("tag_name") as HTMLInputElement;
+const add_tag = document.getElementById("add_tag") as HTMLButtonElement;
 
 storage.getReportFromStorage("to", (value) => {
   to.value = value || "";
@@ -71,4 +75,57 @@ const reloadPreview = () => {
   } else {
     console.warn(`Element with id "${id}" not found.`);
   }
+});
+
+add_tag.onclick = () => {
+  TagClass.addTag(tag_name.value);
+  tag_name.value = "";
+
+  // 0.5秒後にタグリストを再描画する
+  setTimeout(() => {
+    location.reload();
+  }, 500);
+};
+
+// タグリストを表示する
+const tagLists = document.getElementById("tag_lists") as HTMLDivElement;
+TagClass.getTagList().then((tagList) => {
+  tagLists.innerHTML = "";
+  tagList.forEach((tag) => {
+    const tr = document.createElement("tr");
+    tr.classList.add("tag");
+
+    const tagTd = document.createElement("td");
+    tagTd.classList.add("border", "px-2", "py-2", "min-w-[90px]");
+    tagTd.textContent = tag.name;
+
+    // ここでタグの削除ボタンを追加する
+    const buttonTd = document.createElement("td");
+    buttonTd.classList.add("border", "px-2", "py-2", "min-w-[90px]");
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add(
+      "flex-shrink-0",
+      "bg-red-500",
+      "hover:bg-red-700",
+      "border-red-500",
+      "hover:border-red-700",
+      "text-sm",
+      "border-4",
+      "text-white",
+      "py-1",
+      "px-2",
+      "rounded",
+      "ml-2",
+    );
+    deleteButton.textContent = "削除";
+    deleteButton.onclick = () => {
+      TagClass.deleteTag(tag.id);
+      tr.remove();
+    };
+    buttonTd.appendChild(deleteButton);
+
+    tr.appendChild(tagTd);
+    tr.appendChild(buttonTd);
+    tagLists.appendChild(tr);
+  });
 });
