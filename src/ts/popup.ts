@@ -1,7 +1,9 @@
 import taskClass from "./taskClass";
 import diaryClass from "./diaryClass";
+import tagClass from "./tagClass";
 const TaskClass = new taskClass();
 const Diary = new diaryClass();
+const TagClass = new tagClass();
 
 const createBtn = document.getElementById("createBtn") as HTMLButtonElement;
 const editBtn = document.getElementById("edit_task") as HTMLButtonElement;
@@ -11,12 +13,25 @@ const taskName = document.getElementById("edit_task_name") as HTMLInputElement;
 const tag = document.getElementById("edit_tag") as HTMLInputElement;
 const startTime = document.getElementById("edit_start_time") as HTMLInputElement;
 const calculationTag = document.getElementById("calculationTag") as HTMLSelectElement;
+const tagSelect = document.getElementById("tag_select") as HTMLSelectElement;
+const editTagSelect = document.getElementById("edit_tag_select") as HTMLSelectElement;
 
 // 日報作成
 createBtn.addEventListener("click", async () => {
   const tasks = await TaskClass.getTaskListForFront();
   const copyText = TaskClass.formatTaskListForReport(tasks);
   Diary.createReportMail("", copyText);
+});
+
+// タグをオプションに追加
+const tagList = TagClass.getTagList();
+tagList.then((tags) => {
+  tags.forEach((tag) => {
+    const option = document.createElement("option");
+    option.value = tag.name;
+    option.textContent = tag.name;
+    tagSelect.appendChild(option);
+  });
 });
 
 interface taskInterface {
@@ -81,7 +96,8 @@ function setUpEventHandlers() {
 // タスク追加ボタンのイベントハンドラ
 function handleAddTaskClick() {
   const taskName = document.getElementById("task_name") as HTMLInputElement;
-  const tag = document.getElementById("tag") as HTMLInputElement;
+  const tag = document.getElementById("tag_select") as HTMLSelectElement;
+
   TaskClass.addTask(taskName.value, tag.value);
   taskName.value = "";
   tag.value = "";
@@ -190,6 +206,18 @@ function editTask(taskId: number) {
   // 編集用のモーダルを表示する
   const modal = document.getElementById("modal") as HTMLDivElement;
   modal.classList.remove("hidden");
+
+  // tagのoptionを追加
+  const tagList = TagClass.getTagList();
+  tagList.then((tags) => {
+    editTagSelect.innerHTML = "";
+    tags.forEach((tag) => {
+      const option = document.createElement("option");
+      option.value = tag.name;
+      option.textContent = tag.name;
+      editTagSelect.appendChild(option);
+    });
+  });
 
   // タスクの情報を取得する
   TaskClass.getTaskById(currentTaskId).then((task) => {
