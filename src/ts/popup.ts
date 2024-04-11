@@ -186,7 +186,7 @@ async function editTaskHandler() {
     console.error("No task selected for editing");
     return;
   }
-  await TaskClass.editTask(currentTaskId, taskName.value, tag.value, startTime.value);
+  await TaskClass.editTask(currentTaskId, taskName.value, editTagSelect.value, startTime.value);
   hideModal();
   // 0.5秒後にタスクリストを再描画する
   setTimeout(() => {
@@ -226,7 +226,7 @@ function editTask(taskId: number) {
       return;
     }
     taskName.value = task.name;
-    tag.value = task.tag ?? "";
+    editTagSelect.value = task.tag ?? "";
     startTime.value = task.start_time;
   });
 }

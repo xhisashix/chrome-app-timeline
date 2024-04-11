@@ -43,6 +43,9 @@ class TagClass implements TagInterface {
    * @return {TagInterface[]}
    */
   public getResultTagList(result: string): TagInterface[] {
+    if (result === "") {
+      return [];
+    }
     return JSON.parse(result) as TagInterface[];
   }
 
