@@ -246,6 +246,22 @@ class TaskClass implements TaskInterface {
         result += `・${task.start_time}~: [${task.tag}] ${task.name}\n`;
       }
     });
+
+    // 改行+ `■作業時間` を追加
+    result += "\n■ 作業時間\n";
+    // タグごとの経過時間を取得し、レポートに追加
+    const tagMap = this.calculateTimeDifferenceByTag(taskList);
+    tagMap.forEach((value, key) => {
+      result += `【${key}】: ${value}\n`;
+    });
+
+    // 合計時間を追加
+    const total = taskList.reduce((acc, task) => {
+      const time = moment(task.elapsed_time, "HH:mm");
+      return acc.add(time.hours(), "hours").add(time.minutes(), "minutes");
+    }, moment().startOf("day"));
+    result += `【合計】: ${total.format("HH:mm")}\n`;
+
     return result;
   }
 
