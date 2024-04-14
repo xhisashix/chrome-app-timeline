@@ -43,9 +43,12 @@ class diaryClass {
    * @param {string} body
    * @return {string}
    */
-  async encodePlainText(body: string) {
-    const encodedBody = encodeURI(body);
-    return encodedBody;
+  async encodePlainText(body: string): Promise<string> {
+    const text = body;
+    // encodeURIComponentでエンコードする
+    const encodedText = encodeURIComponent(text);
+
+    return encodedText;
   }
 
   /**
@@ -71,7 +74,7 @@ class diaryClass {
     status_report: string,
     report_footer: string = "",
   ) {
-    const report = `${report_head}\n\n【進捗状況】\n${this.perseTaskStatus(status_report)}\n\n【タスク状況】\n${task_report}\n\n${report_footer}`;
+    const report = `${report_head}\n\n【進捗状況】\n${status_report}\n\n【タスク状況】\n${task_report}\n\n${report_footer}`;
 
     return report;
   }
@@ -87,17 +90,6 @@ class diaryClass {
     const report = `<p>${report_head}</p><br><p>【進捗状況】</p><p>{{進捗状況}}</p><br><p>【タスク状況】</p><p>{{タスク状況}}</p><br><p>${report_footer}</p>`;
 
     return report;
-  }
-
-  /**
-   * @param {string} task_status
-   * @return {string}
-   */
-  perseTaskStatus(task_status: string) {
-    // 半角＆を全角に変換
-    task_status = task_status.replace(/&/g, "＆");
-    task_status = task_status.replace("#", "＃");
-    return task_status;
   }
 }
 

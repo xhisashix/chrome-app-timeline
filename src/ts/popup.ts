@@ -19,7 +19,7 @@ const editTagSelect = document.getElementById("edit_tag_select") as HTMLSelectEl
 // 日報作成
 createBtn.addEventListener("click", async () => {
   const tasks = await TaskClass.getTaskListForFront();
-  const copyText = TaskClass.formatTaskListForReport(tasks);
+  const copyText = await TaskClass.formatTaskListForReport(tasks);
   Diary.createReportMail("", copyText);
 });
 
