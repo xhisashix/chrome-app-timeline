@@ -210,7 +210,6 @@ function editTask(taskId: number) {
   // tagのoptionを追加
   const tagList = TagClass.getTagList();
   tagList.then((tags) => {
-    editTagSelect.innerHTML = "";
     tags.forEach((tag) => {
       const option = document.createElement("option");
       option.value = tag.name;
