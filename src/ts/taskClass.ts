@@ -252,7 +252,7 @@ class TaskClass implements TaskInterface {
     // タグごとの経過時間を取得し、レポートに追加
     const tagMap = this.calculateTimeDifferenceByTag(taskList);
     tagMap.forEach((value, key) => {
-      result += `【${key}】: ${value}\n`;
+      result += `・${key} : ${value}\n`;
     });
 
     // 合計時間を追加
