@@ -142,6 +142,12 @@ class TaskClass implements TaskInterface {
     }
   }
 
+  /**
+   * タスクリストを取得する
+   * @param {string} result
+   * @return {TaskInterface[]}
+   * @private
+   */
   private getTaskList(result: string): TaskInterface[] {
     if (result) {
       return JSON.parse(result);
@@ -196,7 +202,7 @@ class TaskClass implements TaskInterface {
     // 指定されたタスクと次のタスクの時間差分を秒単位で計算し、HH:mmフォーマットに変換
     const diffInSeconds = nextTaskTime.diff(taskTime, "seconds");
     const result = moment().startOf("day").add(diffInSeconds, "seconds").format("HH:mm");
-    console.log(`${tasks[index].id} result: `, result);
+    console.log(`${tasks[index].id}: taskName - ${tasks[index].name} result: `, result);
 
     setTimeout(() => {
       this.saveElapsedTime(tasks[index].id, result);
@@ -256,13 +262,22 @@ class TaskClass implements TaskInterface {
     });
 
     // 合計時間を追加
-    const total = taskList.reduce((acc, task) => {
-      const time = moment(task.elapsed_time, "HH:mm");
-      return acc.add(time.hours(), "hours").add(time.minutes(), "minutes");
-    }, moment().startOf("day"));
+    const total = this.calcTotalTaskTime(taskList);
     result += `【合計】: ${total.format("HH:mm")}\n`;
 
     return result;
+  }
+
+  /**
+   * タスクリストの合計時間を計算する
+   * @param {TaskInterface[]} taskList
+   * @return {moment.Moment}
+   */
+  private calcTotalTaskTime(taskList: TaskInterface[]): moment.Moment {
+    return taskList.reduce((acc, task) => {
+      const time = moment(task.elapsed_time, "HH:mm");
+      return acc.add(time.hours(), "hours").add(time.minutes(), "minutes");
+    }, moment().startOf("day"));
   }
 
   /**
